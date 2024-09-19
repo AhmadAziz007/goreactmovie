@@ -43,14 +43,12 @@ func main() {
 	flag.StringVar(&cfg.db.dsn, "dsn", "postgres://postgres:root123@localhost/id_gomoviereact?sslmode=disable",
 		"Postgres connection config")
 	flag.Parse()
-
 	logger := log.New(os.Stdout, "", log.Ldate|log.Ltime)
 
 	db, err := openDB(cfg)
 	if err != nil {
 		logger.Fatal(err)
 	}
-
 	defer db.Close()
 
 	app := &application{
@@ -69,7 +67,7 @@ func main() {
 		WriteTimeout: 30 * time.Second,
 	}
 
-	logger.Printf("Starting sever on port %d", cfg.port)
+	logger.Printf("Starting sever on port ", cfg.port)
 
 	err = serve.ListenAndServe()
 	if err != nil {
@@ -92,5 +90,4 @@ func openDB(cfg config) (*sql.DB, error) {
 	}
 
 	return db, nil
-
 }
